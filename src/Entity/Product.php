@@ -27,6 +27,9 @@ class Product
     #[ORM\OneToMany(targetEntity: Price::class, mappedBy: 'Product')]
     private Collection $prices;
 
+    #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
+    private ?Image $image = null;
+
     public function __construct()
     {
         $this->SubCategory = new ArrayCollection();
@@ -112,6 +115,23 @@ class Product
                 $price->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(Image $image): static
+    {
+        // set the owning side of the relation if necessary
+        if ($image->getProduct() !== $this) {
+            $image->setProduct($this);
+        }
+
+        $this->image = $image;
 
         return $this;
     }
