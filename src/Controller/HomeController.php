@@ -14,31 +14,52 @@ class HomeController extends AbstractController
 {
 
     private $query;
+
     public function __construct(QueryController $queryController)
     {
-        $this->query=$queryController;
+        $this->query = $queryController;
     }
 
-    #[Route('/home', name:'/home')]
-    public function getHome(ManagerRegistry $managerRegistry, EntityManagerInterface $entityManager){
-        $subCategories=$this->query->getAllSubCategories($managerRegistry);
-        $serializedSubCategories=[];
-        foreach( $subCategories as $subCategory) {
-            $product=$subCategory->getProducts()->first();
-            $image=$this->query->getImageByIdProduct($managerRegistry,$product);
+    #[Route('/home', name: '/home')]
+    public function getHome(ManagerRegistry $managerRegistry)
+    {
+        $subCategories = $this->query->getAllSubCategories($managerRegistry);
+        $serializedSubCategories = [];
+        foreach ($subCategories as $subCategory) {
+            $product = $subCategory->getProducts()->first();
+            $image = $this->query->getImageByProduct($managerRegistry, $product);
             $serializedSubCategories[] = [
                 'id' => $subCategory->getId(),
                 'name' => $subCategory->getName(),
-                'categoryid'=>$subCategory->getCategory()->getId(),
+                'categoryid' => $subCategory->getCategory()->getId(),
                 'category' => $subCategory->getCategory()->getName(),
-                'products'=>[
-                    'id'=>$product->getId(),
-                    'name'=>$product->getName(),
-                    'description'=>$product->getDescription(),
-                    'src'=>$image->getSrc()
+                'products' => [
+                    'id' => $product->getId(),
+                    'name' => $product->getName(),
+                    'description' => $product->getDescription(),
+                    'src' => $image->getSrc()
                 ]
             ];
         }
         return $this->json($serializedSubCategories);
+    }
+
+    #[Route('/catalog', name: '/catalog')]
+    public function getCatalogo(ManagerRegistry $managerRegistry)
+    {
+
+        $products = $this->query->getAllProducts($managerRegistry);
+        $serializedProducts = [];
+        foreach ($products as $product) {
+            $image = $this->query->getImageByProduct($managerRegistry, $product);
+            $serializedProducts[] = [
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'description' => $product->getDescription(),
+                'src' => $image->getSrc()
+            ];
+        }
+        return $this->json($serializedProducts);
+
     }
 }

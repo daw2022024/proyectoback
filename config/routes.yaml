@@ -3,3 +3,8 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+error:
+    path: /{catchall}
+    controller: App\Controller\ErrorController::error
+    requirements:
+            catchall: '.*'
