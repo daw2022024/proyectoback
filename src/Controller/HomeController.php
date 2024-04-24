@@ -41,7 +41,11 @@ class HomeController extends AbstractController
                 ]
             ];
         }
-        return $this->json($serializedSubCategories);
+        $response=$this->json($serializedSubCategories);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        return $response;
     }
 
     #[Route('/catalog', name: '/catalog')]
@@ -59,7 +63,11 @@ class HomeController extends AbstractController
                 'src' => $image->getSrc()
             ];
         }
-        return $this->json($serializedProducts);
+        $response=$this->json($serializedProducts);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        return $response;
 
     }
 }

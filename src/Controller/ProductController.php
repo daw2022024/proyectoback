@@ -64,7 +64,12 @@ class ProductController extends AbstractController
             "mensaje" => "No se han encontrado resultados"
         ];
 
-        return $this->json($serializedProduct);
+        $response=$this->json($serializedProduct);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        return $response;
+
     }
 
 
