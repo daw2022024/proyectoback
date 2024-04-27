@@ -20,6 +20,10 @@ class ErrorController extends AbstractController
         $errorMessage = 'Error: Ruta no encontrada';
 
         // Devuelve una respuesta JSON con el mensaje de error y el código de estado 404
-        return new JsonResponse(['error' => $errorMessage], JsonResponse::HTTP_NOT_FOUND);
+        $response=new JsonResponse(['error' => $errorMessage], JsonResponse::HTTP_NOT_FOUND);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        return $response;
     }
 }
