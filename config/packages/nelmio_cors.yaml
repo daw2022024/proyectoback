@@ -1,0 +1,25 @@
+nelmio_cors:
+    defaults:
+        allow_origin: ['*']
+        allow_methods: ['GET', 'OPTIONS', 'POST'] # Agrega otros métodos según sea necesario
+        allow_headers: ['Content-Type', 'Authorization'] # Agrega otros encabezados según sea necesario
+        max_age: 3600 # Tiempo de caché para la precomprobación de opciones
+
+    paths:
+        '^/': # Ruta que deseas permitir CORS (en este caso, todas las rutas)
+            allow_origin: ['*']
+            allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] # Métodos permitidos para esta ruta
+            allow_headers: ['Content-Type', 'Authorization'] # Encabezados permitidos para esta ruta
+            max_age: 3600 # Tiempo de caché para la precomprobación de opciones
+            hosts: ['^localhost$', '^127\.0\.0\.1$'] # Opcional: lista de hosts permitidos
+
+#nelmio_cors:
+#    defaults:
+#        origin_regex: true
+#        allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
+#        allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
+#        allow_headers: ['Content-Type', 'Authorization']
+#        expose_headers: ['Link']
+#        max_age: 3600
+#    paths:
+#        '^/': null
