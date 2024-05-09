@@ -26,7 +26,8 @@ class SubCategoryController extends AbstractController
                     $serializableProducts[] = [
                         'id' => $product->getId(),
                         'name' => $product->getName(),
-                        'src' => $image->getSrc()
+                        'src' => $image->getSrc(),
+                        'subcategory'=>$product->getSubCategory()->first()->getName()
                     ];
                 }
 

@@ -60,7 +60,15 @@ class HomeController extends AbstractController
                 'id' => $product->getId(),
                 'name' => $product->getName(),
                 'description' => $product->getDescription(),
-                'src' => $image->getSrc()
+                'src' => $image->getSrc(),
+                'category' => [
+                    'id' => $product->getSubCategory()->first()->getCategory()->getId(),
+                    'name' => $product->getSubCategory()->first()->getCategory()->getName()
+                ],
+                'subcategory' => [
+                    'id' => $product->getSubCategory()->first()->getId(),
+                    'name' => $product->getSubCategory()->first()->getName()
+                ]
             ];
         }
         $response=$this->json($serializedProducts);
