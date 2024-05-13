@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bbddproyecto
+      MYSQL_USER: daniel
+      MYSQL_PASSWORD: daniel
+    ports:
+      - "8106:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+  app:
+    build: .
+    ports:
+      - "8180:80"
+      - "8181:8000"
+    volumes:
+      - ./data/proyectoback:/app
